@@ -1,7 +1,7 @@
-import { genGood } from './good';
+import { inventoryProducts, toListItem } from './inventory';
 
-export function getGoodsList(baseID = 0, length = 10) {
-  return new Array(length).fill(0).map((_, idx) => genGood(idx + baseID));
+export function getGoodsList(baseIndex = 0, length = inventoryProducts.length) {
+  return inventoryProducts.slice(baseIndex, baseIndex + length).map(toListItem);
 }
 
 export const goodsList = getGoodsList();

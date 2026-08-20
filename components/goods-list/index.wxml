@@ -1,16 +1,16 @@
 <view class="goods-list-wrap wr-class" id="{{independentID}}">
-	<block wx:for="{{goodsList}}" wx:for-item="item" wx:key="index">
-		<goods-card
-		  id="{{independentID}}-gd-{{index}}"
-		  data="{{item}}"
-		  currency="{{item.currency || '¥'}}"
-		  thresholds="{{thresholds}}"
-		  class="goods-card-inside"
-		  data-index="{{index}}"
-		  bind:thumb="onClickGoodsThumb"
-		  bind:click="onClickGoods"
-		  bind:add-cart="onAddCart"
-		/>
-	</block>
+  <view class="inventory-card" wx:for="{{goodsList}}" wx:key="productId" data-index="{{index}}" bindtap="onClickGoods">
+    <image class="inventory-card__image" src="{{item.thumb}}" mode="aspectFill" />
+    <view class="inventory-card__body">
+      <view class="inventory-card__brand">{{item.brand}}</view>
+      <view class="inventory-card__name">{{item.name}}</view>
+      <view class="inventory-card__meta">{{item.model}} · {{item.color}} · {{item.size}}</view>
+      <view class="inventory-card__footer">
+        <text class="inventory-card__price">¥{{item.priceRmb}}</text>
+        <text class="inventory-card__stock inventory-card__stock--{{item.stock === 0 ? 'empty' : 'ready'}}"
+          >{{item.stockStatus}}</text
+        >
+      </view>
+    </view>
+  </view>
 </view>
-
