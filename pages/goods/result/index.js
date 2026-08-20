@@ -1,6 +1,5 @@
 /* eslint-disable no-param-reassign */
 import { getSearchResult } from '../../../services/good/fetchSearchResult';
-import Toast from 'tdesign-miniprogram/toast/index';
 
 const initFilters = {
   overall: 1,
@@ -99,10 +98,6 @@ Page({
         }
 
         const _goodsList = reset ? spuList : goodsList.concat(spuList);
-        _goodsList.forEach((v) => {
-          v.tags = v.spuTagList.map((u) => u.title);
-          v.hideKey = { desc: true };
-        });
         const _loadMoreStatus = _goodsList.length === totalCount ? 2 : 0;
         this.pageNum = params.pageNum || 1;
         this.total = totalCount;
@@ -126,12 +121,6 @@ Page({
     this.setData({
       hasLoaded: true,
       loading: false,
-    });
-  },
-
-  handleCartTap() {
-    wx.switchTab({
-      url: '/pages/cart/index',
     });
   },
 
@@ -159,19 +148,11 @@ Page({
     this.init(false);
   },
 
-  handleAddCart() {
-    Toast({
-      context: this,
-      selector: '#t-toast',
-      message: '点击加购',
-    });
-  },
-
   gotoGoodsDetail(e) {
     const { index } = e.detail;
     const { spuId } = this.data.goodsList[index];
     wx.navigateTo({
-      url: `/pages/goods/details/index?spuId=${spuId}`,
+      url: `/pages/goods/details/index?productId=${spuId}`,
     });
   },
 

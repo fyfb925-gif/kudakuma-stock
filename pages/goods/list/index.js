@@ -1,5 +1,4 @@
 import { fetchGoodsList } from '../../../services/good/fetchGoodsList';
-import Toast from 'tdesign-miniprogram/toast/index';
 
 const initFilters = {
   overall: 1,
@@ -140,14 +139,6 @@ Page({
     this.init(false);
   },
 
-  handleAddCart() {
-    Toast({
-      context: this,
-      selector: '#t-toast',
-      message: '点击加购',
-    });
-  },
-
   tagClickHandle() {
     Toast({
       context: this,
@@ -160,7 +151,7 @@ Page({
     const { index } = e.detail;
     const { spuId } = this.data.goodsList[index];
     wx.navigateTo({
-      url: `/pages/goods/details/index?spuId=${spuId}`,
+      url: `/pages/goods/details/index?productId=${spuId}`,
     });
   },
 

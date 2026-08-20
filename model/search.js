@@ -1,60 +1,22 @@
-import { getGoodsList } from './goods';
-
-/**
- * @param {number} sort
- * @param {number} pageNum
- * @param {number} pageSize
- * @param {number} minPrice
- * @param {number} maxPrice
- * @param {string} keyword
- */
+import { inventoryProducts, toListItem } from './inventory';
 
 export function getSearchHistory() {
-  return {
-    historyWords: [
-      '鸡',
-      '电脑',
-      'iPhone12',
-      '车载手机支架',
-      '自然堂',
-      '小米10',
-      '原浆古井贡酒',
-      '欧米伽',
-      '华为',
-      '针织半身裙',
-      '氢跑鞋',
-      '三盒处理器',
-    ],
-  };
+  return { historyWords: ['SHIMANO', '头盔', 'M码'] };
 }
-
 export function getSearchPopular() {
-  return {
-    popularWords: [
-      '鸡',
-      '电脑',
-      'iPhone12',
-      '车载手机支架',
-      '自然堂',
-      '小米10',
-      '原浆古井贡酒',
-      '欧米伽',
-      '华为',
-      '针织半身裙',
-      '氢跑鞋',
-      '三盒处理器',
-    ],
-  };
+  return { popularWords: ['OGK KABUTO', '骑行服', '锁鞋'] };
 }
-
-export function getSearchResult() {
-  return {
-    saasId: null,
-    storeId: null,
-    pageNum: 1,
-    pageSize: 30,
-    totalCount: 1,
-    spuList: getGoodsList(7),
-    algId: 0,
-  };
+export function getSearchResult({ keyword = '', minPrice = 0, maxPrice } = {}) {
+  const normalized = decodeURIComponent(keyword).trim().toLowerCase();
+  const products = inventoryProducts.filter((item) => {
+    const text = [item.productId, item.brand, item.name, item.model, item.color, item.size, item.category]
+      .join(' ')
+      .toLowerCase();
+    return (
+      (!normalized || text.includes(normalized)) &&
+      item.priceRmb * 100 >= minPrice &&
+      (!maxPrice || item.priceRmb * 100 <= maxPrice)
+    );
+  });
+  return { pageNum: 1, pageSize: products.length, totalCount: products.length, spuList: products.map(toListItem) };
 }

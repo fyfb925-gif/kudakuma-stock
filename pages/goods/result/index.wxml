@@ -6,7 +6,7 @@
     t-class-input="t-search__input"
     value="{{keywords}}"
     leftIcon=""
-    placeholder="iPhone12pro"
+    placeholder="品牌、型号、尺码或编号"
     bind:submit="handleSubmit"
   >
     <t-icon slot="left-icon" prefix="wr" name="search" size="40rpx" color="#bbb" />
@@ -54,13 +54,7 @@
     <t-empty t-class="empty-tips" size="240rpx" description="暂无相关商品" />
   </view>
   <view class="category-goods-list" wx:if="{{goodsList.length}}">
-    <goods-list
-      wr-class="wr-goods-list"
-      goodsList="{{goodsList}}"
-      bind:click="gotoGoodsDetail"
-      bind:addcart="handleAddCart"
-    />
+    <goods-list wr-class="wr-goods-list" goodsList="{{goodsList}}" bind:click="gotoGoodsDetail" />
   </view>
   <load-more wx:if="{{goodsList.length > 0}}" status="{{loadMoreStatus}}" no-more-text="没有更多了" />
 </view>
-<t-toast id="t-toast" />
